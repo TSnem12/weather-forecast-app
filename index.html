@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="app">
+
+        <h1>Weather Forecast</h1>
+
+        <form id="searchForm" class="search">
+            <input type="search" id="cityInput" placeholder="Search for a city..." aria-label="City name" required>
+            <button type="submit" class="btn">Search</button>
+        </form>
+
+        <ul id="suggestions" class="suggestions" hidden></ul>
+
+        <div id="loader" class="loader" hidden role="status" aria-label="Loading"></div>
+
+        <p id="error" class="error" hidden role="alert"></p>
+
+        <section id="weather" class="weather" hidden>
+
+            <div class="current">
+                <h2 id="cityName"></h2>
+                <div class="current-main">
+                    <span id="weatherIcon" class="icon" aria-hidden="true"></span>
+                    <span id="temp" class="temp"></span>
+                </div>
+                <p id="condition" class="condition"></p>
+            </div>
+
+            <div class="details">
+                <div class="detail">
+                    <span class="label">Humidity</span>
+                    <span id="humidity"></span>
+                </div>
+                <div class="detail">
+                    <span class="label">Wind</span>
+                    <span id="wind"></span>
+                </div>
+                <div class="detail">
+                    <span class="label">Pressure</span>
+                    <span id="pressure"></span>
+                </div>
+            </div>
+
+            <h3>5-Day Forecast</h3>
+            <div id="forecast" class="forecast"></div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

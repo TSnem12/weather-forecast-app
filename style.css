@@ -1,0 +1,299 @@
+/* ==========================================================
+   Weather App: style.css
+   1. Base
+   2. Weather backgrounds (set by JS via data-theme)
+   3. Layout & search
+   4. Suggestions, loader, error
+   5. Current weather & details
+   6. Forecast
+   7. Footer
+   8. Larger screens
+   ========================================================== */
+
+
+/* ---------- 1. Base ---------- */
+:root {
+  --card: rgba(15, 23, 42, .35);
+  --card-border: rgba(255, 255, 255, .22);
+  --muted: rgba(255, 255, 255, .8);
+  --radius: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+  color: #fff;
+  background-color: #334155;
+  background-image: linear-gradient(160deg, #1e293b, #475569);
+  background-attachment: fixed;
+}
+
+
+/* ---------- 2. Weather backgrounds ---------- */
+body[data-theme="sunny"]  { background-image: linear-gradient(160deg, #1d4ed8, #0ea5e9); }
+body[data-theme="cloudy"] { background-image: linear-gradient(160deg, #475569, #64748b); }
+body[data-theme="rain"]   { background-image: linear-gradient(160deg, #1e3a5f, #475569); }
+body[data-theme="night"]  { background-image: linear-gradient(160deg, #0f172a, #1e293b); }
+body[data-theme="snow"]   { background-image: linear-gradient(160deg, #475569, #64748b); }
+body[data-theme="storm"]  { background-image: linear-gradient(160deg, #1e1b4b, #4c1d95); }
+
+
+/* ---------- 3. Layout & search ---------- */
+.app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
+
+h1 {
+  margin: 8px 0 20px;
+  font-size: 1.6rem;
+  text-align: center;
+}
+
+.search {
+  display: flex;
+  gap: 8px;
+}
+
+.search input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  font: inherit;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .95);
+  color: #0f172a;
+}
+
+.btn {
+  padding: 12px 18px;
+  font: inherit;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  background: #0f172a;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #1e293b;
+}
+
+.search input:focus-visible,
+.btn:focus-visible,
+.suggestion:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+
+/* ---------- 4. Suggestions, loader, error ---------- */
+.suggestions {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  overflow: hidden;
+  background: rgba(15, 23, 42, .92);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+}
+
+.suggestion {
+  display: block;
+  width: 100%;
+  padding: 12px 14px;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, .12);
+  background: none;
+  color: #fff;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.suggestions li:last-child .suggestion {
+  border-bottom: none;
+}
+
+.suggestion:hover,
+.suggestion:focus-visible {
+  background: rgba(255, 255, 255, .12);
+}
+
+.loader {
+  width: 44px;
+  height: 44px;
+  margin: 32px auto;
+  border: 4px solid rgba(255, 255, 255, .3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error {
+  margin: 16px 0;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(220, 38, 38, .35);
+  border: 1px solid rgba(254, 202, 202, .6);
+}
+
+
+/* ---------- 5. Current weather & details ---------- */
+.weather {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+/* Shared "glass card" look */
+.current,
+.details,
+.forecast-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(10px);
+}
+
+.current {
+  padding: 24px 16px;
+  text-align: center;
+}
+
+.current h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.current-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 8px 0;
+}
+
+.current .icon {
+  font-size: clamp(56px, 16vw, 88px);
+  line-height: 1;
+}
+
+.temp {
+  font-size: clamp(52px, 14vw, 80px);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.condition {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--muted);
+}
+
+.details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 16px 8px;
+  text-align: center;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-weight: 600;
+}
+
+.label {
+  font-size: .75rem;
+  font-weight: 400;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+
+/* ---------- 6. Forecast ---------- */
+.weather h3 {
+  margin: 8px 0 0;
+  font-size: 1.1rem;
+}
+
+/* Mobile: one row per day */
+.forecast {
+  display: grid;
+  gap: 8px;
+}
+
+.forecast-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+}
+
+.forecast-card .day {
+  min-width: 3em;
+  font-weight: 600;
+}
+
+.forecast-card .icon {
+  font-size: 1.8rem;
+}
+
+.forecast-card .range {
+  font-variant-numeric: tabular-nums;
+}
+
+
+/* ---------- 7. Footer ---------- */
+footer {
+  padding: 24px 16px;
+  text-align: center;
+  font-size: .85rem;
+  color: var(--muted);
+}
+
+footer a {
+  color: inherit;
+}
+
+
+/* ---------- 8. Larger screens ---------- */
+@media (min-width: 600px) {
+  .forecast {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .forecast-card {
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px 8px;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader {
+    animation-duration: 2s;
+  }
+}
